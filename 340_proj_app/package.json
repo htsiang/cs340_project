@@ -4,14 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "development": "vite",
     "build": "vite build",
-    "lint": "eslint .",
+    "production": "npx forever start reactServer.cjs",
+    "stop_production": "npx forever stop reactServer.cjs",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.13.0"
   },
   "devDependencies": {

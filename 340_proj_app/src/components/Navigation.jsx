@@ -8,6 +8,8 @@ function Navigation(){
             <Link to='/pokemon' className='link'>Pokemon</Link>
             <Link to='/treatments' className='link'>Treatments</Link>
             <Link to='/sessions' className='link'>Sessions</Link>
+            <Link to='/sessionshastreatments' className='link'>SessionsHasTreatments</Link>
+            <Link to='/addSession' className='link'>Add Session</Link>
         </nav>
     )
 }

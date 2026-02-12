@@ -6,6 +6,8 @@ import Trainers from './pages/Trainers';
 import Pokemon from './pages/Pokemon';
 import Treatments from './pages/Treatments';
 import Sessions from './pages/Sessions';
+import SessionsHasTreatments from './pages/SessionsHasTreatments';
+import AddSessionsHasTreatments from './pages/AddSessionWithTreatments';
 
 function App() {
 
@@ -22,6 +24,8 @@ function App() {
             <Route path='/pokemon' element={<Pokemon />}></Route>
             <Route path='/treatments' element={<Treatments />}></Route>
             <Route path='/sessions' element={<Sessions />}></Route>
+            <Route path='/sessionshastreatments' element={<SessionsHasTreatments/>}></Route>
+            <Route path='/addSession' element={<AddSessionsHasTreatments/>}></Route>
           </Routes>
         </Router>
       </div>
