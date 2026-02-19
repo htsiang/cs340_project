@@ -4,6 +4,38 @@ import { VscEdit, VscTrash } from "react-icons/vsc";
 import SessionsTableRow from './SessionsTableRow';
 
 function SessionsTable({ sessions }){
+    sessions = [{
+        sessionId: 1,
+        nickname: "Pikachu",
+        firstName: "Ash",
+        lastName: "Ketchum",
+        pokemonType: "Electric",
+        species: "Pikachu",
+        dateCol: "02-01-2025",
+        timeCol: "13:00:00",
+        cost: 55.00
+    },{
+        sessionId: 2,
+        nickname: "Charizard",
+        firstName: "ASh",
+        lastName: "Ketchum",
+        pokemonType: "Fire",
+        species: "Charizard",
+        dateCol: "03-03-2025",
+        timeCol: "14:30:00",
+        cost: 55.00
+    },{
+        sessionId: 3,
+        nickname: "Bronix",
+        firstName: "Brock",
+        lastName: "Takeshi",
+        pokemonType: "Rock",
+        species: "Onix",
+        dateCol: "12-20-2025",
+        timeCol: "11:00:00",
+        cost: 40.00
+    }]
+
     return (
         <table className='table'>
             <caption></caption>
