@@ -1,8 +1,8 @@
 import React from 'react';
 import '../App.css';
-import { VscEdit, VscTrash } from "react-icons/vsc";
+import UpdateDelete from './UpdateDelete';
 
-function SessionsTableRow({ session }){
+function SessionsTableRow({ session, onDelete, onEdit }){
     return (
         <tr>
             <td className='columns'>{session.sessionId}</td>
@@ -14,7 +14,7 @@ function SessionsTableRow({ session }){
             <td className='columns'>{session.dateCol}</td>
             <td className='columns'>{session.timeCol}</td>
             <td className='columns'>{session.cost}</td>
-            <td className='columns'><VscEdit /><VscTrash /></td>
+            <UpdateDelete className='columns' session={session} onDelete={onDelete} onEdit={onEdit}/>
         </tr>
     )
 }

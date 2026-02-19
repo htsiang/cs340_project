@@ -3,13 +3,24 @@ import '../App.css';
 import { useNavigate } from 'react-router-dom';
 import SessionsTable from '../components/SessionsTable';
 
-function Sessions(){
+function Sessions({ setSessionToEdit }){
     const [sessions, setSessions] = useState([]);
+
+    const navigate = useNavigate();
+
+    const onDelete = async (sessionId) => {
+        alert("Future functionality will be added to delete this row.")
+    }
+
+    const onEdit = (session) => {
+        setSessionToEdit(session);
+        navigate('/updateSession');
+    }
 
     return (
         <div>
             <h2>Sessions</h2>
-            <SessionsTable sessions={sessions} />
+            <SessionsTable sessions={sessions} onDelete={onDelete} onEdit={onEdit} />
         </div>
     )
 }

@@ -8,8 +8,10 @@ import Treatments from './pages/Treatments';
 import Sessions from './pages/Sessions';
 import SessionsHasTreatments from './pages/SessionsHasTreatments';
 import AddSessionsHasTreatments from './pages/AddSessionWithTreatments';
+import UpdateSessionWithTreatments from './pages/UpdateSessionWithTreatments';
 
 function App() {
+  const [sessionToEdit, setSessionToEdit] = useState();
 
   return (
     <>
@@ -23,9 +25,10 @@ function App() {
             <Route path='/' element={<Trainers />}></Route>
             <Route path='/pokemon' element={<Pokemon />}></Route>
             <Route path='/treatments' element={<Treatments />}></Route>
-            <Route path='/sessions' element={<Sessions />}></Route>
+            <Route path='/sessions' element={<Sessions setSessionToEdit={setSessionToEdit}/>}></Route>
             <Route path='/sessionshastreatments' element={<SessionsHasTreatments/>}></Route>
             <Route path='/addSession' element={<AddSessionsHasTreatments/>}></Route>
+            <Route path='/updateSession' element={<UpdateSessionWithTreatments sessionToEdit={sessionToEdit}/>}></Route>
           </Routes>
         </Router>
       </div>

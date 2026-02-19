@@ -3,7 +3,7 @@ import '../App.css';
 import { VscEdit, VscTrash } from "react-icons/vsc";
 import SessionsTableRow from './SessionsTableRow';
 
-function SessionsTable({ sessions }){
+function SessionsTable({ sessions, onDelete, onEdit }){
     sessions = [{
         sessionId: 1,
         nickname: "Pikachu",
@@ -56,7 +56,7 @@ function SessionsTable({ sessions }){
                 </tr>
             </thead>
             <tbody>
-                {sessions.map((session, i) => <SessionsTableRow session={session} key={i} />)}
+                {sessions.map((session, i) => <SessionsTableRow session={session} onDelete={onDelete} onEdit={onEdit} key={i} />)}
             </tbody>
         </table>
     )
