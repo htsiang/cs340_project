@@ -51,7 +51,7 @@ function SessionsTable({ sessions, onDelete, onEdit }){
                     <th className='columns'>time</th>
                     <th className='columns'>cost</th>
                     <th className='columns'>
-                        <div><VscEdit /><VscTrash /></div>
+                        <div><VscEdit />{' '}<VscTrash /></div>
                     </th>
                 </tr>
             </thead>
