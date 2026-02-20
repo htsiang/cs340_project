@@ -6,7 +6,7 @@ function UpdateDelete({session, onDelete, onEdit}){
     return (
         <td id="update-delete">
             <VscEdit onClick={e => {e.preventDefault(); onEdit(session)}}/>
-            <VscTrash onClick={e => {e.preventDefault(); onDelete(session._id)}}/>
+            <VscTrash onClick={e => {e.preventDefault(); onDelete(session.sessionId)}}/>
         </td>
     )
 }

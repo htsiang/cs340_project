@@ -9,7 +9,8 @@ function Sessions({ setSessionToEdit }){
     const navigate = useNavigate();
 
     const onDelete = async (sessionId) => {
-        alert("Future functionality will be added to delete this row.")
+        console.log(sessionId);
+        alert("Future functionality will be added to delete this row.");
     }
 
     const onEdit = (session) => {

@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
 function UpdateSessionWithTreatments({ sessionToEdit }) {
-    const [sessionDate, setSessionDate] = useState('');
-    const [sessionTime, setSessionTime] = useState('');
-    const [sessionCost, setSessionCost] = useState('');
+    const [sessionDate, setSessionDate] = useState(sessionToEdit.dateCol);
+    const [sessionTime, setSessionTime] = useState(sessionToEdit.timeCol);
+    const [sessionCost, setSessionCost] = useState(sessionToEdit.cost);
+
+    console.log(sessionToEdit);
 
     const navigate = useNavigate();
 
@@ -22,8 +24,9 @@ function UpdateSessionWithTreatments({ sessionToEdit }) {
 
     return (
         <div>
-            <h2>Session with Treatment Details</h2>
-            <h4>For {sessionToEdit.firstName}</h4>
+            <h2>Edit Session with Treatment Details</h2>
+            <h4>For Trainer: {sessionToEdit.firstName} {sessionToEdit.lastName}</h4>
+            <h4>For Pokemon: {sessionToEdit.nickname}</h4>
             <form className='form'>
                 <fieldset>
                     <legend>Edit Session with Treatment Details</legend>

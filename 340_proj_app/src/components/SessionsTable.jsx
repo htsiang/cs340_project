@@ -11,7 +11,7 @@ function SessionsTable({ sessions, onDelete, onEdit }){
         lastName: "Ketchum",
         pokemonType: "Electric",
         species: "Pikachu",
-        dateCol: "02-01-2025",
+        dateCol: "2025-02-01",
         timeCol: "13:00:00",
         cost: 55.00
     },{
@@ -21,7 +21,7 @@ function SessionsTable({ sessions, onDelete, onEdit }){
         lastName: "Ketchum",
         pokemonType: "Fire",
         species: "Charizard",
-        dateCol: "03-03-2025",
+        dateCol: "2025-03-03",
         timeCol: "14:30:00",
         cost: 55.00
     },{
@@ -31,7 +31,7 @@ function SessionsTable({ sessions, onDelete, onEdit }){
         lastName: "Takeshi",
         pokemonType: "Rock",
         species: "Onix",
-        dateCol: "12-20-2025",
+        dateCol: "2025-12-20",
         timeCol: "11:00:00",
         cost: 40.00
     }]
