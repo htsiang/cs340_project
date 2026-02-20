@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
+import SingleTreatmentCheckbox from '../components/SingleTreatmentCheckbox';
 
 function UpdateSessionWithTreatments({ sessionToEdit }) {
     const [sessionDate, setSessionDate] = useState(sessionToEdit.dateCol);
@@ -11,16 +12,27 @@ function UpdateSessionWithTreatments({ sessionToEdit }) {
 
     const navigate = useNavigate();
 
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
-    }
-
-    const handlePokemonChange = (event) => {
-        setPokemon(event.target.value);
-    }
-
-    const emailOptions = []; // get emails from database
-    const pokemonOptions = []; // get pokemon from database
+    const treatments = [{
+        treatmentId: 1,
+        name: "Body Massage",
+        duration: 30,
+        cost: 15.00,
+        description: "Swedish massage techniques are applied to the surface/skin of your Pokemon. Pressure is applied to encourage relaxation. Must be a species-applicable Pokemon."
+    },
+    {
+        treatmentId: 2,
+        name: "Heated Therapy",
+        duration: 60,
+        cost: 25.00,
+        description: "Warm towels are applied to the body of your Pokemon. If applicable, a paste that heats up on the skin is also included that soothes and rejuvenates sore muscles."
+    },
+    {
+        treatmentId: 3,
+        name: "Wash and Soak",
+        duration: 90,
+        cost: 45.00,
+        description: "Species-appropriate soaps are used to wash dirt and grime away. Pokemon are offered hot springs or species-appropriate baths with salts to soak in for the remainder of their time."
+    }]
 
     return (
         <div>
@@ -41,6 +53,7 @@ function UpdateSessionWithTreatments({ sessionToEdit }) {
                     <label className='form-field'><span className='label'>Cost:</span>
                         <input type='text' placeholder="Cost" value={sessionCost} onChange={e => setSessionCost(e.target.value)} />
                     </label>
+                    {treatments.map((treatment, i) => <SingleTreatmentCheckbox treatment={treatment} key={i}/>)}
                 </fieldset>
                 <button>Update</button>
             </form>
