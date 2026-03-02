@@ -3,7 +3,7 @@ import '../App.css';
 import TrainersTableRow from './TrainersTableRow';
 
 function TrainersTable({ trainers }){
-    trainers =[{
+    /* trainers =[{
         trainerId: 1,
         firstName: "Ash",
         lastName: "Ketchum",
@@ -24,7 +24,7 @@ function TrainersTable({ trainers }){
         email: "btakeshi@pkmail.com",
         phone: "505-980-7748",
         notes: "Rock-type gym leader."
-    }]
+    }] */
 
     return (
         <table className='table'>
