@@ -4,14 +4,14 @@
 // Source URL: https://canvas.oregonstate.edu/courses/2031764/assignments/10323319?module_item_id=26243357
 
 // Database
-const db = require('./database/db-connector');
+import db from './database/db-connector';
 
 // Express
-const express = require('express');
+import express from 'express';
 const app = express();
 
 // Middleware
-const cors = require('cors');
+import cors from 'cors';
 app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json()); // this is needed for post requests
 

@@ -6,7 +6,7 @@
 import 'dotenv/config';
 
 // Get an instance of mysql we can use in the app
-let mysql = require('mysql2')
+import mysql from 'mysql2';
 
 // Create a 'connection pool' using the provided credentials
 const pool = mysql.createPool({
@@ -19,6 +19,6 @@ const pool = mysql.createPool({
 }).promise(); // This makes it so we can use async / await rather than callbacks
 
 // Export it for use in our application
-module.exports = pool;
+export default pool;
 
 console.log(process.env.HOST)
