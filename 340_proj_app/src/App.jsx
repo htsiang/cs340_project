@@ -28,7 +28,7 @@ function App() {
             <h1>Shining Pearl Spa Database</h1>
           </header>
           <Routes>
-            <Route path='/' element={<Trainers />}></Route>
+            <Route path='/' element={<Trainers backendURL={backendURL}/>}></Route>
             <Route path='/pokemon' element={<Pokemon />}></Route>
             <Route path='/treatments' element={<Treatments />}></Route>
             <Route path='/sessions' element={<Sessions setSessionToEdit={setSessionToEdit}/>}></Route>
