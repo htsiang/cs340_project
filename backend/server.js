@@ -4,7 +4,7 @@
 // Source URL: https://canvas.oregonstate.edu/courses/2031764/assignments/10323319?module_item_id=26243357
 
 // Database
-import { pool as db } from './database/db-connector.js';
+import db from './database/db-connector.js';
 
 // Express
 import express from 'express';
