@@ -33,10 +33,16 @@ function Sessions({ backendURL, setSessionToEdit }){
         navigate('/updateSession');
     }
 
+    const onReset = () => {
+        alert('Reset func to be added.');
+    }
+
     return (
         <div>
             <h2>Sessions</h2>
             <SessionsTable sessions={sessions} onDelete={onDelete} onEdit={onEdit} />
+
+            <button onClick={onReset}>Reset</button>
         </div>
     )
 }
