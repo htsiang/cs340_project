@@ -25,7 +25,7 @@ const PORT = 13139;
 app.get('/trainers', async (req, res) => {
     try {
         // Create and execute our queries
-        const query1 = `SELECT * FROM Trainers;`;
+        const query1 = `CALL sp_get_trainers();`;
         const [trainers] = await db.query(query1);
     
         res.status(200).json({ trainers });  // Send the results to the frontend
@@ -40,8 +40,7 @@ app.get('/trainers', async (req, res) => {
 app.get('/pokemon', async (req, res) => {
     try {
         // Create and execute our queries
-        const query1 = `SELECT PokemonId, Pokemon.nickname, Pokemon.pokemonType, Pokemon.species, Pokemon.notes, Trainers.firstName, Trainers.lastName FROM Pokemon
-                        JOIN Trainers ON Pokemon.trainerId = Trainers.trainerId;`;
+        const query1 = `CALL sp_get_pokemon();`;
         const [pokemon] = await db.query(query1);
     
         res.status(200).json({ pokemon });  // Send the results to the frontend
@@ -56,7 +55,7 @@ app.get('/pokemon', async (req, res) => {
 app.get('/treatments', async (req, res) => {
     try {
         // Create and execute our queries
-        const query1 = `SELECT * FROM Treatments;`;
+        const query1 = `CALL sp_get_treatments();`;
         const [treatments] = await db.query(query1);
     
         res.status(200).json({ treatments });  // Send the results to the frontend
@@ -71,10 +70,7 @@ app.get('/treatments', async (req, res) => {
 app.get('/pokemonSpecies', async (req, res) => {
     try {
         // Create and execute our queries
-        const query1 = `SELECT COLUMN_TYPE 
-                        FROM INFORMATION_SCHEMA.COLUMNS 
-                        WHERE TABLE_NAME = 'Pokemon' 
-                            AND COLUMN_NAME = 'species'`;
+        const query1 = `CALL sp_get_species();`;
         const columnResults = await db.query(query1);
         console.log(columnResults);
         const pokemonSpecies = columnResults[0][0].COLUMN_TYPE.slice(6, -2).split("','");
@@ -91,10 +87,7 @@ app.get('/pokemonSpecies', async (req, res) => {
 app.get('/pokemonTypes', async (req, res) => {
     try {
         // Create and execute our queries
-        const query1 = `SELECT COLUMN_TYPE 
-                        FROM INFORMATION_SCHEMA.COLUMNS 
-                        WHERE TABLE_NAME = 'Pokemon' 
-                            AND COLUMN_NAME = 'pokemonType'`;
+        const query1 = `CALL sp_get_pokemonTypes();`;
         const columnResults = await db.query(query1);
         const pokemonTypes = columnResults[0][0].COLUMN_TYPE.slice(6, -2).split("','");
     
@@ -110,9 +103,7 @@ app.get('/pokemonTypes', async (req, res) => {
 app.get('/sessions', async (req, res) => {
     try {
         // Create and execute our queries
-        const query1 = `SELECT Sessions.sessionId, Trainers.firstName, Trainers.lastName, Pokemon.nickname, Pokemon.pokemonType, Pokemon.species, Sessions.dateCol, Sessions.timeCol, Sessions.cost FROM Sessions
-                        JOIN Trainers ON Sessions.trainerId = Trainers.trainerId
-                        JOIN Pokemon ON Sessions.pokemonId = Pokemon.pokemonId;`;
+        const query1 = `CALL sp_get_sessions();`;
         const [sessions] = await db.query(query1);
     
         res.status(200).json({ sessions });  // Send the results to the frontend
@@ -127,12 +118,7 @@ app.get('/sessions', async (req, res) => {
 app.get('/sessionsHasTreatments', async (req, res) => {
     try {
         // Create and execute our queries
-        const query1 = `SELECT Sessions.sessionId, Treatments.treatmentId, Trainers.firstName, Trainers.lastName, Pokemon.nickname, Pokemon.pokemonType, Pokemon.species, Sessions.dateCol, Sessions.timeCol, Treatments.name AS treatmentName, Treatments.duration AS treatmentDuration FROM SessionsHasTreatments
-                        JOIN Sessions ON SessionsHasTreatments.sessionId = Sessions.sessionId
-                        JOIN Trainers ON Sessions.trainerId = Trainers.trainerId
-                        JOIN Pokemon ON Sessions.pokemonId = Pokemon.pokemonId
-                        JOIN Treatments ON SessionsHasTreatments.treatmentId = Treatments.treatmentId
-                        ORDER BY Trainers.lastname ASC, Trainers.firstname ASC, Pokemon.nickname ASC, Sessions.dateCol ASC, Sessions.timeCol ASC;`;
+        const query1 = `CALL sp_get_sessionsHasTreatments();`;
         const [sessionsHasTreatments] = await db.query(query1);
     
         res.status(200).json({ sessionsHasTreatments });  // Send the results to the frontend
