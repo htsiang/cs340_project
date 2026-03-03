@@ -41,10 +41,100 @@ app.get('/pokemon', async (req, res) => {
     try {
         // Create and execute our queries
         const query1 = `SELECT PokemonId, Pokemon.nickname, Pokemon.pokemonType, Pokemon.species, Pokemon.notes, Trainers.firstName, Trainers.lastName FROM Pokemon
-JOIN Trainers ON Pokemon.trainerId = Trainers.trainerId;`;
+                        JOIN Trainers ON Pokemon.trainerId = Trainers.trainerId;`;
         const [pokemon] = await db.query(query1);
     
         res.status(200).json({ pokemon });  // Send the results to the frontend
+
+    } catch (error) {
+        console.error("Error executing queries:", error);
+        // Send a generic error message to the browser
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
+});
+
+app.get('/treatments', async (req, res) => {
+    try {
+        // Create and execute our queries
+        const query1 = `SELECT * FROM Treatments;`;
+        const [treatments] = await db.query(query1);
+    
+        res.status(200).json({ treatments });  // Send the results to the frontend
+
+    } catch (error) {
+        console.error("Error executing queries:", error);
+        // Send a generic error message to the browser
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
+});
+
+app.get('/pokemonSpecies', async (req, res) => {
+    try {
+        // Create and execute our queries
+        const query1 = `SELECT SUBSTRING(COLUMN_TYPE,5)
+                        FROM information_schema.COLUMNS
+                        WHERE TABLE_SCHEMA='shining_pearl_spa' 
+                            AND TABLE_NAME='Pokemon'
+                            AND COLUMN_NAME='species';`;
+        const [pokemonSpecies] = await db.query(query1);
+    
+        res.status(200).json({ pokemonSpecies });  // Send the results to the frontend
+
+    } catch (error) {
+        console.error("Error executing queries:", error);
+        // Send a generic error message to the browser
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
+});
+
+app.get('/pokemonTypes', async (req, res) => {
+    try {
+        // Create and execute our queries
+        const query1 = `SELECT SUBSTRING(COLUMN_TYPE,5)
+                        FROM information_schema.COLUMNS
+                        WHERE TABLE_SCHEMA='shining_pearl_spa' 
+                            AND TABLE_NAME='Pokemon'
+                            AND COLUMN_NAME='pokemonType';`;
+        const [pokemonTypes] = await db.query(query1);
+    
+        res.status(200).json({ pokemonTypes });  // Send the results to the frontend
+
+    } catch (error) {
+        console.error("Error executing queries:", error);
+        // Send a generic error message to the browser
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
+});
+
+app.get('/sessions', async (req, res) => {
+    try {
+        // Create and execute our queries
+        const query1 = `SELECT Sessions.sessionId, Trainers.firstName, Trainers.lastName, Pokemon.nickname, Pokemon.pokemonType, Pokemon.species, Sessions.dateCol, Sessions.timeCol, Sessions.cost FROM Sessions
+                        JOIN Trainers ON Sessions.trainerId = Trainers.trainerId
+                        JOIN Pokemon ON Sessions.pokemonId = Pokemon.pokemonId;`;
+        const [sessions] = await db.query(query1);
+    
+        res.status(200).json({ sessions });  // Send the results to the frontend
+
+    } catch (error) {
+        console.error("Error executing queries:", error);
+        // Send a generic error message to the browser
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
+});
+
+app.get('/sessionsHasTreatments', async (req, res) => {
+    try {
+        // Create and execute our queries
+        const query1 = `SELECT Sessions.sessionId, Treatments.treatmentId, Trainers.firstName, Trainers.lastName, Pokemon.nickname, Pokemon.pokemonType, Pokemon.species, Sessions.dateCol, Sessions.timeCol, Treatments.name AS treatmentName, Treatments.duration AS treatmentDuration FROM SessionsHasTreatments
+                        JOIN Sessions ON SessionsHasTreatments.sessionId = Sessions.sessionId
+                        JOIN Trainers ON Sessions.trainerId = Trainers.trainerId
+                        JOIN Pokemon ON Sessions.pokemonId = Pokemon.pokemonId
+                        JOIN Treatments ON SessionsHasTreatments.treatmentId = Treatments.treatmentId
+                        ORDER BY Trainers.lastname ASC, Trainers.firstname ASC, Pokemon.nickname ASC, Sessions.dateCol ASC, Sessions.timeCol ASC;`;
+        const [sessionsHasTreatments] = await db.query(query1);
+    
+        res.status(200).json({ sessionsHasTreatments });  // Send the results to the frontend
 
     } catch (error) {
         console.error("Error executing queries:", error);
