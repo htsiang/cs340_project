@@ -26,7 +26,8 @@ app.get('/trainers', async (req, res) => {
     try {
         // Create and execute our queries
         const query1 = `CALL sp_get_trainers();`;
-        const [trainers] = await db.query(query1);
+        const [results] = await db.query(query1);
+        const trainers = results[0]
     
         res.status(200).json({ trainers });  // Send the results to the frontend
 
