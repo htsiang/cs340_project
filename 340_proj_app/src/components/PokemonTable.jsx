@@ -3,39 +3,6 @@ import '../App.css';
 import PokemonTableRow from './PokemonTableRow';
 
 function PokemonTable({ pokemon }){
-    pokemon = [{
-        pokemonId: 1,
-        nickname: "Pikachu",
-        firstName: "Ash",
-        lastName: "Ketchum",
-        pokemonType: "Electric",
-        species: "Pikachu",
-        notes: "Minimize cheek contact during face massage."
-    },{
-        pokemonId: 2,
-        nickname: "Charizard",
-        firstName: "Ash",
-        lastName: "Ketchum",
-        pokemonType: "Fire",
-        species: "Charizard",
-        notes: "Does not like having tail touched."
-    },{
-        pokemonId: 3,
-        nickname: "Psyduck",
-        firstName: "Misty",
-        lastName: "Kasumi",
-        pokemonType: "Water",
-        species: "Psyduck",
-        notes: "Prone to anxiety."
-    },{
-        pokemonId: 4,
-        nickname: "Bronix",
-        firstName: "Brock",
-        lastName: "Takeshi",
-        pokemonType: "Rock",
-        species: "Onix",
-        notes: null
-    }]
 
     return (
         <table className='table'>

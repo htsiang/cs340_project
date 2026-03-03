@@ -19,7 +19,6 @@ function Sessions({ backendURL, setSessionToEdit }){
     const navigate = useNavigate();
 
     const onDelete = async (sessionId) => {
-        console.log(sessionId);
         const response = await fetch(`${backendURL}/sessions/${sessionId}`, { method: 'DELETE' });
         if (response.status === 204) {
             loadSessions();
