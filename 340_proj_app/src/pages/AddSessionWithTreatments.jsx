@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import SingleTreatmentCheckbox from '../components/SingleTreatmentCheckbox';
 
-function AddSessionsHasTreatments() {
+function AddSessionsHasTreatments({ backendURL }) {
     const [email, setEmail] = useState('');
     const [pokemon, setPokemon] = useState('');
     const [sessionDate, setSessionDate] = useState('');

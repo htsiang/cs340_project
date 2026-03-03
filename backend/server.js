@@ -146,7 +146,7 @@ app.get('/sessionsHasTreatments', async (req, res) => {
 
 app.delete('/sessions/:id', async (req, res) => {
     try {
-        const query1 = ``;
+        const query1 = `DELETE FROM Sessions WHERE sessionId = ${req.params.id};`;
         const result = await db.query(query1);
 
         res.status(204).json()

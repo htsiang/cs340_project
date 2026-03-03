@@ -3,8 +3,18 @@ import '../App.css';
 import { useNavigate } from 'react-router-dom';
 import TreatmentsTable from '../components/TreatmentsTable';
 
-function Treatments(){
+function Treatments({ backendURL }){
     const [treatments, setTreatments] = useState([]);
+    
+    const loadTreatments = async () => {
+        const response = await fetch(backendURL + '/treatments');
+        const data = await response.json();
+        setTreatments(data.treatments);
+    }
+
+    useEffect(() => {
+        loadTreatments();
+    }, []);
 
     return (
         <div>

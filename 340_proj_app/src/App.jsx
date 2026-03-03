@@ -29,12 +29,12 @@ function App() {
           </header>
           <Routes>
             <Route path='/' element={<Trainers backendURL={backendURL}/>}></Route>
-            <Route path='/pokemon' element={<Pokemon />}></Route>
-            <Route path='/treatments' element={<Treatments />}></Route>
-            <Route path='/sessions' element={<Sessions setSessionToEdit={setSessionToEdit}/>}></Route>
-            <Route path='/sessionshastreatments' element={<SessionsHasTreatments/>}></Route>
-            <Route path='/addSession' element={<AddSessionsHasTreatments/>}></Route>
-            <Route path='/updateSession' element={<UpdateSessionWithTreatments sessionToEdit={sessionToEdit}/>}></Route>
+            <Route path='/pokemon' element={<Pokemon  backendURL={backendURL}/>}></Route>
+            <Route path='/treatments' element={<Treatments  backendURL={backendURL}/>}></Route>
+            <Route path='/sessions' element={<Sessions backendURL={backendURL} setSessionToEdit={setSessionToEdit}/>}></Route>
+            <Route path='/sessionshastreatments' element={<SessionsHasTreatments backendURL={backendURL}/>}></Route>
+            <Route path='/addSession' element={<AddSessionsHasTreatments backendURL={backendURL}/>}></Route>
+            <Route path='/updateSession' element={<UpdateSessionWithTreatments backendURL={backendURL} sessionToEdit={sessionToEdit}/>}></Route>
           </Routes>
         </Router>
       </div>

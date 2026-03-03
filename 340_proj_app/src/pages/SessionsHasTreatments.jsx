@@ -3,8 +3,18 @@ import '../App.css';
 import { useNavigate } from 'react-router-dom';
 import SessionsHasTreatmentsTable from '../components/SessionsHasTreatmentsTable';
 
-function SessionsHasTreatments(){
+function SessionsHasTreatments({ backendURL }){
     const [sessionsHasTreatments, setSessionsHasTreatments] = useState([]);
+    
+    const loadSessionsHasTreatments = async () => {
+        const response = await fetch(backendURL + '/sessionsHasTreatments');
+        const data = await response.json();
+        setSessionsHasTreatments(data.sessionsHasTreatments);
+    }
+
+    useEffect(() => {
+        loadSessionsHasTreatments();
+    }, []);
 
     return (
         <div>

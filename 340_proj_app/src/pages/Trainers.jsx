@@ -9,7 +9,7 @@ function Trainers({ backendURL }){
     const loadTrainers = async () => {
         const response = await fetch(backendURL + '/trainers');
         const data = await response.json();
-        setTrainers(data);
+        setTrainers(data.trainers);
     }
 
     useEffect(() => {

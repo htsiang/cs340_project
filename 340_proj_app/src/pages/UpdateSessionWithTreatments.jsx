@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import SingleTreatmentCheckbox from '../components/SingleTreatmentCheckbox';
 
-function UpdateSessionWithTreatments({ sessionToEdit }) {
+function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
     const [sessionDate, setSessionDate] = useState(sessionToEdit.dateCol);
     const [sessionTime, setSessionTime] = useState(sessionToEdit.timeCol);
     const [sessionCost, setSessionCost] = useState(sessionToEdit.cost);
