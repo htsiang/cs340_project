@@ -42,7 +42,8 @@ app.get('/pokemon', async (req, res) => {
     try {
         // Create and execute our queries
         const query1 = `CALL sp_get_pokemon();`;
-        const [pokemon] = await db.query(query1);
+        const [results] = await db.query(query1);
+        const pokemon = results[0];
     
         res.status(200).json({ pokemon });  // Send the results to the frontend
 
@@ -57,7 +58,8 @@ app.get('/treatments', async (req, res) => {
     try {
         // Create and execute our queries
         const query1 = `CALL sp_get_treatments();`;
-        const [treatments] = await db.query(query1);
+        const [results] = await db.query(query1);
+        const treatments = results[0];
     
         res.status(200).json({ treatments });  // Send the results to the frontend
 
@@ -105,7 +107,8 @@ app.get('/sessions', async (req, res) => {
     try {
         // Create and execute our queries
         const query1 = `CALL sp_get_sessions();`;
-        const [sessions] = await db.query(query1);
+        const [results] = await db.query(query1);
+        const sessions = results[0];
     
         res.status(200).json({ sessions });  // Send the results to the frontend
 
@@ -120,7 +123,8 @@ app.get('/sessionsHasTreatments', async (req, res) => {
     try {
         // Create and execute our queries
         const query1 = `CALL sp_get_sessionsHasTreatments();`;
-        const [sessionsHasTreatments] = await db.query(query1);
+        const [results] = await db.query(query1);
+        const sessionsHasTreatments = results[0];
     
         res.status(200).json({ sessionsHasTreatments });  // Send the results to the frontend
 
@@ -133,7 +137,7 @@ app.get('/sessionsHasTreatments', async (req, res) => {
 
 app.delete('/sessions/:id', async (req, res) => {
     try {
-        const query1 = `DELETE FROM Sessions WHERE sessionId = ${req.params.id};`;
+        const query1 = `CALL sp_delete_session(${req.params.id});`;
         console.log(req.params.id);
         const result = await db.query(query1);
 
