@@ -33,10 +33,12 @@ function Sessions({ backendURL, setSessionToEdit }){
     }
 
     const onReset = async () => {
-        const response = await fetch(`${backendURL}/reset`);
-        if (response.status===200){
-            loadSessions();
-        } else {
+        try {
+            const response = await fetch(`${backendURL}/reset`);
+            if (response.status===200){
+                loadSessions();
+            }
+        } catch (error){
             console.error(`Failed to reset db. Status code = ${response.status}`);
         }
     }
