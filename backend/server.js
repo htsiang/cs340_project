@@ -71,12 +71,13 @@ app.get('/treatments', async (req, res) => {
 app.get('/pokemonSpecies', async (req, res) => {
     try {
         // Create and execute our queries
-        const query1 = `SELECT SUBSTRING(COLUMN_TYPE,5)
-                        FROM information_schema.COLUMNS
-                        WHERE TABLE_SCHEMA='shining_pearl_spa' 
-                            AND TABLE_NAME='Pokemon'
-                            AND COLUMN_NAME='species';`;
-        const [pokemonSpecies] = await db.query(query1);
+        const query1 = `SELECT COLUMN_TYPE 
+                        FROM INFORMATION_SCHEMA.COLUMNS 
+                        WHERE TABLE_NAME = 'Pokemon' 
+                            AND COLUMN_NAME = 'species'`;
+        const columnResults = await db.query(query1);
+        console.log(columnResults);
+        const pokemonSpecies = columnResults[0][0].COLUMN_TYPE.slice(6, -2).split("','");
     
         res.status(200).json({ pokemonSpecies });  // Send the results to the frontend
 
@@ -90,12 +91,12 @@ app.get('/pokemonSpecies', async (req, res) => {
 app.get('/pokemonTypes', async (req, res) => {
     try {
         // Create and execute our queries
-        const query1 = `SELECT SUBSTRING(COLUMN_TYPE,5)
-                        FROM information_schema.COLUMNS
-                        WHERE TABLE_SCHEMA='shining_pearl_spa' 
-                            AND TABLE_NAME='Pokemon'
-                            AND COLUMN_NAME='pokemonType';`;
-        const [pokemonTypes] = await db.query(query1);
+        const query1 = `SELECT COLUMN_TYPE 
+                        FROM INFORMATION_SCHEMA.COLUMNS 
+                        WHERE TABLE_NAME = 'Pokemon' 
+                            AND COLUMN_NAME = 'pokemonType'`;
+        const columnResults = await db.query(query1);
+        const pokemonTypes = columnResults[0][0].COLUMN_TYPE.slice(6, -2).split("','");
     
         res.status(200).json({ pokemonTypes });  // Send the results to the frontend
 
