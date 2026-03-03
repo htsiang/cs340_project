@@ -156,6 +156,17 @@ app.delete('/sessions/:id', async (req, res) => {
     }
 })
 
+app.get('/reset', async (req, res) => {
+    try {
+        const query1 = "CALL sp_load_shiningpearlspadb();";
+        const result = await db.query(query1);
+        res.status(200).json({ message: "Reset complete." });
+    } catch (error) {
+        console.error("Error executing reset:", error);
+        res.status(500).send("An error occurred while trying to reset.");
+    }
+})
+
 // ########################################
 // ########## LISTENER
 
