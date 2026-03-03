@@ -144,6 +144,17 @@ app.get('/sessionsHasTreatments', async (req, res) => {
     }
 });
 
+app.delete('/sessions/:id', async (req, res) => {
+    try {
+        const query1 = ``;
+        const result = await db.query(query1);
+
+        res.status(204).json()
+    } catch (error){
+        res.type('application/json').status(404).json(error);
+    }
+})
+
 // ########################################
 // ########## LISTENER
 
