@@ -33,8 +33,13 @@ function Sessions({ backendURL, setSessionToEdit }){
         navigate('/updateSession');
     }
 
-    const onReset = () => {
-        alert('Reset func to be added.');
+    const onReset = async () => {
+        const response = await fetch(`${backendURL}/reset`);
+        if (response.status===200){
+            loadSessions();
+        } else {
+            console.error(`Failed to reset db. Status code = ${response.status}`);
+        }
     }
 
     return (
