@@ -1,14 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import SingleTreatmentCheckbox from '../components/SingleTreatmentCheckbox';
 
 function AddSessionsHasTreatments({ backendURL }) {
+    const [trainers, setTrainers] = useState([]);
+    const [allPokemon, setAllPokemon] = useState([]);
     const [email, setEmail] = useState('');
     const [pokemon, setPokemon] = useState('');
     const [sessionDate, setSessionDate] = useState('');
     const [sessionTime, setSessionTime] = useState('');
     const [sessionCost, setSessionCost] = useState('');
+
+    useEffect(() => {
+        const loadTrainers = async () => {
+            const response = await fetch(backendURL + '/trainers');
+            const data = await response.json();
+            setTrainers(data.trainers);
+            setEmail(data.trainers[0].email);
+        }
+        const loadAllPokemon = async () => {
+            const response = await fetch(backendURL + '/pokemon');
+            const data = await response.json();
+            setAllPokemon(data.pokemon);
+            const trainerPokemon = data.pokemon.filter(p => p.firstName === data.trainers[0].firstName && p.lastName === data.trainers[0].lastName);
+            setPokemon(trainerPokemon[0].nickname);
+        }
+        loadTrainers();
+        loadAllPokemon();
+    }, [backendURL]);
 
     const navigate = useNavigate();
 
@@ -26,6 +46,13 @@ function AddSessionsHasTreatments({ backendURL }) {
 
     const emailOptions = []; // get emails from database
     const pokemonOptions = []; // get pokemon from database
+
+    const activeTrainer = trainers.find(t => t.email === email);
+
+    // This also recalculates automatically whenever 'activeTrainer' or 'allPokemon' changes.
+    const trainerPokemons = activeTrainer
+        ? allPokemon.filter(p => p.firstName === activeTrainer.firstName && p.lastName === activeTrainer.lastName)
+        : [];
 
     const treatments = [{
         treatmentId: 1,
@@ -57,19 +84,19 @@ function AddSessionsHasTreatments({ backendURL }) {
                     <legend>Add Session with Treatment Details</legend>
                     <label className='form-field'><span className='label'>Trainer's Email:</span>
                         <select value={email} onChange={handleEmailChange}>
-                            {emailOptions.map((emailOption) => (
-                                <option key={emailOption.id} value={emailOption.email}>
-                                    {emailOption.label}
-                                </option> 
+                            {trainers.map((trainer) => (
+                                <option key={trainer.id} value={trainer.email}>
+                                    {trainer.email}
+                                </option>
                             ))}
                         </select>
                     </label>
                     <br></br>
                     <label className='form-field'><span className='label'>Pokemon</span>
                         <select value={pokemon} onChange={handlePokemonChange}>
-                            {pokemonOptions.map((pokemonOption) => (
-                                <option key={pokemonOption.id} value={pokemonOption.id}>
-                                    {pokemonOption.label}
+                            {trainerPokemons.map((trainerPokemon) => (
+                                <option key={trainerPokemon.PokemonId} value={trainerPokemon.nickname}>
+                                    {trainerPokemon.nickname}
                                 </option>
                             ))}
                         </select>
