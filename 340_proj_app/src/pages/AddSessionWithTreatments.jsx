@@ -80,7 +80,7 @@ function AddSessionsHasTreatments({ backendURL }) {
                     </label>
                     <br></br>
                     <label className='form-field'><span className='label'>Pokemon</span>
-                        <select value={pokemon} onChange={handlePokemonChange}>
+                        <select onChange={handlePokemonChange}>
                             {trainerPokemon.map((pokemon) => (
                                 <option key={pokemon.pokemonId} value={pokemon.nickname}>
                                     {pokemon.nickname}
