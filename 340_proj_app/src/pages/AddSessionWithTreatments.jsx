@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
 import '../App.css';
 import SingleTreatmentCheckbox from '../components/SingleTreatmentCheckbox';
 
@@ -11,24 +12,33 @@ function AddSessionsHasTreatments({ backendURL }) {
     const [sessionDate, setSessionDate] = useState('');
     const [sessionTime, setSessionTime] = useState('');
     const [sessionCost, setSessionCost] = useState('');
+    const [treatments, setTreatments] = useState([]);
+
+    const loadTrainers = async () => {
+        const response = await fetch(backendURL + '/trainers');
+        const data = await response.json();
+        setEmail(data.trainers[0].email);
+    }
+
+    const loadAllPokemon = async () => {
+        const response = await fetch(backendURL + '/pokemon');
+        const data = await response.json();
+        setAllPokemon(data.pokemon);
+        const trainerPokemon = data.pokemon.filter(p => p.firstName === data.trainers[0].firstName && p.lastName === data.trainers[0].lastName);
+        setPokemon(trainerPokemon[0].nickname);
+    }
+    
+    const loadTreatments = async () => {
+        const response = await fetch(backendURL + '/treatments');
+        const data = await response.json();
+        setTreatments(data.treatments);
+    }
 
     useEffect(() => {
-        const loadTrainers = async () => {
-            const response = await fetch(backendURL + '/trainers');
-            const data = await response.json();
-            setTrainers(data.trainers);
-            setEmail(data.trainers[0].email);
-        }
-        const loadAllPokemon = async () => {
-            const response = await fetch(backendURL + '/pokemon');
-            const data = await response.json();
-            setAllPokemon(data.pokemon);
-            const trainerPokemon = data.pokemon.filter(p => p.firstName === data.trainers[0].firstName && p.lastName === data.trainers[0].lastName);
-            setPokemon(trainerPokemon[0].nickname);
-        }
         loadTrainers();
         loadAllPokemon();
-    }, [backendURL]);
+        loadTreatments;
+    }, []);
 
     const navigate = useNavigate();
 
@@ -54,27 +64,12 @@ function AddSessionsHasTreatments({ backendURL }) {
         ? allPokemon.filter(p => p.firstName === activeTrainer.firstName && p.lastName === activeTrainer.lastName)
         : [];
 
-    const treatments = [{
-        treatmentId: 1,
-        name: "Body Massage",
-        duration: 30,
-        cost: 15.00,
-        description: "Swedish massage techniques are applied to the surface/skin of your Pokemon. Pressure is applied to encourage relaxation. Must be a species-applicable Pokemon."
-    },
-    {
-        treatmentId: 2,
-        name: "Heated Therapy",
-        duration: 60,
-        cost: 25.00,
-        description: "Warm towels are applied to the body of your Pokemon. If applicable, a paste that heats up on the skin is also included that soothes and rejuvenates sore muscles."
-    },
-    {
-        treatmentId: 3,
-        name: "Wash and Soak",
-        duration: 90,
-        cost: 45.00,
-        description: "Species-appropriate soaps are used to wash dirt and grime away. Pokemon are offered hot springs or species-appropriate baths with salts to soak in for the remainder of their time."
-    }]
+    const addSessionWithTreatments = async (e) => {
+        e.preventDefault();
+
+        const newSession = {};
+        console.log(newSession);
+    }
 
     return (
         <div>
@@ -83,13 +78,13 @@ function AddSessionsHasTreatments({ backendURL }) {
                 <fieldset>
                     <legend>Add Session with Treatment Details</legend>
                     <label className='form-field'><span className='label'>Trainer's Email:</span>
-                        <select value={email} onChange={handleEmailChange}>
+                        <Select options={email} isSearchable={true} isSelectable={true} onChange={handleEmailChange}>
                             {trainers.map((trainer) => (
                                 <option key={trainer.id} value={trainer.email}>
                                     {trainer.email}
                                 </option>
                             ))}
-                        </select>
+                        </Select>
                     </label>
                     <br></br>
                     <label className='form-field'><span className='label'>Pokemon</span>
@@ -113,9 +108,9 @@ function AddSessionsHasTreatments({ backendURL }) {
                     <label className='form-field'><span className='label'>Cost:</span>
                         <input type='text' placeholder="Cost" value={sessionCost} onChange={e => setSessionCost(e.target.value)} />
                     </label>
-                    {treatments.map((treatment, i) => <SingleTreatmentCheckbox treatment={treatment} key={i}/>)}
+                    {treatments.map((treatment, i) => <SingleTreatmentCheckbox treatment={treatment} key={treatment.treatmentId}/>)}
                 </fieldset>
-                <button>Create</button>
+                <button onClick={addSessionWithTreatments}>Create</button>
             </form>
         </div>
     )

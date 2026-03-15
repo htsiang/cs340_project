@@ -158,6 +158,10 @@ app.get('/reset', async (req, res) => {
     }
 })
 
+// app.put('/session', async (req, res) => {
+//     const query1 = `CALL sp_create_session(${email, pokemonNickname, })`
+// })
+
 // ########################################
 // ########## LISTENER
 
