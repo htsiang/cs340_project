@@ -111,7 +111,8 @@ function AddSessionsHasTreatments({ backendURL }) {
                     <label className='form-field'><span className='label'>Cost:</span>
                         <input type='text' placeholder="Cost" value={sessionCost} onChange={e => setSessionCost(e.target.value)} />
                     </label>
-                    {treatments.map((treatment, i) => <SingleTreatmentCheckbox treatment={treatment} onChange={handleTreatmentChange} checked={selectedTreatments.includes(treatment)} key={treatment.treatmentId}/>)}
+                    {treatments.map((treatment) => (<label><input type="checkbox" value={treatment} checked={selectedTreatments.includes(treatment)} onChange={handleTreatmentChange}/>{treatment.name}</label>))}
+                    {/* {treatments.map((treatment, i) => <SingleTreatmentCheckbox treatment={treatment} onChange={handleTreatmentChange} checked={selectedTreatments.includes(treatment)} key={treatment.treatmentId}/>)} */}
                 </fieldset>
                 <button onClick={addSessionWithTreatments}>Create</button>
             </form>
