@@ -80,10 +80,18 @@ function AddSessionsHasTreatments({ backendURL }) {
 
         const response = await fetch(backendURL + "/sessionWithTreatments", {
             method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify(newSession)
         });
 
-        console.log(response);
+        if (!response.ok) {
+            console.error("Error:", await response.text());
+        } else {
+            const data = await response.json();
+            alert("Created session:", data);
+        }
     }
 
     return (
