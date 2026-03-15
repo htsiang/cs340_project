@@ -165,7 +165,7 @@ app.post('/session', async (req, res) => {
         res.status(201).json(result);
     } catch (error) {
         console.error("Error adding session:", error);
-        res.status(500).send("An error occured while trying to add a session.");
+        res.status(500).send("Error adding session:" + error);
     }
 })
 
