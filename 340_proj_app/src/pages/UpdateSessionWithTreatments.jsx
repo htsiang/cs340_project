@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
-import SingleTreatmentCheckbox from '../components/SingleTreatmentCheckbox';
 
 function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
     const [sessionDate, setSessionDate] = useState(sessionToEdit.dateCol);
@@ -43,7 +42,7 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
             setSelectedTreatments(selectedTreatments.filter((treatment) => treatment !== parseInt(value)));
         }
     };
-    
+
     return (
         <div>
             <h2>Edit Session with Treatment Details</h2>
@@ -64,7 +63,6 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
                         <input type='text' placeholder="Cost" value={sessionCost} onChange={e => setSessionCost(e.target.value)} />
                     </label>
                     {treatments.map((treatment) => (<label><input type="checkbox" value={treatment.treatmentId} checked={sessionTreatments.includes(treatment.treatmentId)} onChange={handleTreatmentChange}/>{treatment.name}</label>))}
-                    {/* {treatments.map((treatment, i) => <SingleTreatmentCheckbox treatment={treatment} key={i}/>)} */}
                 </fieldset>
                 <button>Update</button>
                 <button onClick={cancelUpdate}>Cancel</button>
