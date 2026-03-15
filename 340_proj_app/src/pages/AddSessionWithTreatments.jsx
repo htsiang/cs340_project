@@ -76,7 +76,7 @@ function AddSessionsHasTreatments({ backendURL }) {
     const addSessionWithTreatments = async (e) => {
         e.preventDefault();
 
-        const newSession = {selectedTrainer, selectedPokemon, sessionDate, sessionTime, sessionCost};
+        const newSession = {selectedTrainer, selectedPokemon, sessionDate, sessionTime, sessionCost, selectedTreatments};
         console.log(newSession);
     }
 
