@@ -160,7 +160,7 @@ app.get('/reset', async (req, res) => {
 
 app.post('/session', async (req, res) => {
     try {
-        const query1 = `CALL sp_create_session(${parseInt(req.body.selectedTrainer.value)}, ${parseInt(req.body.selectedPokemon)}, ${req.body.sessionDate}, ${req.body.sessionTime}, ${req.body.sessionCost})`;
+        const query1 = `CALL sp_create_session(${parseInt(req.body.selectedTrainer.value)}, ${parseInt(req.body.selectedPokemon)}, ${req.body.sessionDate}, ${req.body.sessionTime}, ${Number(req.body.sessionCost)})`;
         const result = await db.query(query1);
         res.status(201).json(result);
     } catch (error) {
