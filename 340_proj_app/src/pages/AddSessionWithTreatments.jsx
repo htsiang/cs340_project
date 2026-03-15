@@ -7,8 +7,9 @@ import SingleTreatmentCheckbox from '../components/SingleTreatmentCheckbox';
 function AddSessionsHasTreatments({ backendURL }) {
     const [trainers, setTrainers] = useState([]);
     const [allPokemon, setAllPokemon] = useState([]);
-    const [email, setEmail] = useState('');
-    const [pokemon, setPokemon] = useState('');
+    const [selectedTrainer, setSelectedTrainer] = useState('');
+    const [trainerPokemon, setTrainerPokemon] = useState([]);
+    const [selectedPokemon, setSelectedPokemon] = useState('');
     const [sessionDate, setSessionDate] = useState('');
     const [sessionTime, setSessionTime] = useState('');
     const [sessionCost, setSessionCost] = useState('');
@@ -27,8 +28,7 @@ function AddSessionsHasTreatments({ backendURL }) {
         const data = await response.json();
         console.log(data);
         setAllPokemon(data.pokemon);
-        const trainerPokemon = data.pokemon.filter(p => p.firstName === data.trainers[0].firstName && p.lastName === data.trainers[0].lastName);
-        setPokemon(trainerPokemon[0].nickname);
+        setTrainerPokemon(data.pokemon);
     }
     
     const loadTreatments = async () => {
@@ -41,7 +41,7 @@ function AddSessionsHasTreatments({ backendURL }) {
     useEffect(() => {
         loadTrainers();
         loadAllPokemon();
-        loadTreatments;
+        loadTreatments();
     }, []);
 
     const navigate = useNavigate();
@@ -50,29 +50,24 @@ function AddSessionsHasTreatments({ backendURL }) {
         navigate('/');
     }
 
-    const handleEmailChange = (newVal, actionMeta) => {
+    const handleTrainerChange = (newVal, actionMeta) => {
         console.log(newVal);
-        setEmail(newVal);
+        setSelectedTrainer(newVal);
+
+        // This also recalculates automatically whenever selected trainer changes.
+        setTrainerPokemon(allPokemon.filter(p => p.trainerId===newVal.value));
     }
 
     const handlePokemonChange = (event) => {
-        setPokemon(event.target.value);
+        setSelectedPokemon(event.target.value);
     }
 
-    const emailOptions = []; // get emails from database
-    const pokemonOptions = []; // get pokemon from database
-
-    const activeTrainer = trainers.find(t => t.email === email);
-
-    // This also recalculates automatically whenever 'activeTrainer' or 'allPokemon' changes.
-    const trainerPokemons = activeTrainer
-        ? allPokemon.filter(p => p.firstName === activeTrainer.firstName && p.lastName === activeTrainer.lastName)
-        : [];
+    
 
     const addSessionWithTreatments = async (e) => {
         e.preventDefault();
 
-        const newSession = {};
+        const newSession = {selectedTrainer, selectedPokemon, sessionDate, sessionDate, sessionCost};
         console.log(newSession);
     }
 
@@ -83,13 +78,13 @@ function AddSessionsHasTreatments({ backendURL }) {
                 <fieldset>
                     <legend>Add Session with Treatment Details</legend>
                     <label className='form-field'><span className='label'>Trainer's Email:</span>
-                        <Select isSearchable={true} isSelectable={true} options={trainers} onChange={handleEmailChange}></Select>
+                        <Select isSearchable={true} isSelectable={true} options={trainers} onChange={handleTrainerChange}></Select>
                     </label>
                     <br></br>
                     <label className='form-field'><span className='label'>Pokemon</span>
                         <select value={pokemon} onChange={handlePokemonChange}>
                             {trainerPokemons.map((trainerPokemon) => (
-                                <option key={trainerPokemon.PokemonId} value={trainerPokemon.nickname}>
+                                <option key={trainerPokemon.pokemonId} value={trainerPokemon.nickname}>
                                     {trainerPokemon.nickname}
                                 </option>
                             ))}
