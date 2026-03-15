@@ -17,6 +17,8 @@ function AddSessionsHasTreatments({ backendURL }) {
     const loadTrainers = async () => {
         const response = await fetch(backendURL + '/trainers');
         const data = await response.json();
+        setTrainers(data.trainers);
+        console.log(trainers);
         setEmail(data.trainers[0].email);
     }
 
@@ -78,13 +80,7 @@ function AddSessionsHasTreatments({ backendURL }) {
                 <fieldset>
                     <legend>Add Session with Treatment Details</legend>
                     <label className='form-field'><span className='label'>Trainer's Email:</span>
-                        <Select options={email} isSearchable={true} isSelectable={true} onChange={handleEmailChange}>
-                            {trainers.map((trainer) => (
-                                <option key={trainer.id} value={trainer.email}>
-                                    {trainer.email}
-                                </option>
-                            ))}
-                        </Select>
+                        <Select isSearchable={true} isSelectable={true} options={trainers} onChange={handleEmailChange}></Select>
                     </label>
                     <br></br>
                     <label className='form-field'><span className='label'>Pokemon</span>
