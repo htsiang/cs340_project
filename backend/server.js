@@ -167,7 +167,7 @@ app.post('/sessionWithTreatments', async (req, res) => {
         const [[result]] = await connection.execute(query2);
 
         for (const treatment of req.body.selectedTreatments) {
-            const query3 = `CALL sp_add_treatment_to_session(newSessionId, ${treatment});`;
+            const query3 = `CALL sp_add_treatment_to_session(${result.newSessionId}, ${treatment});`;
             await connection.execute(query3);
         }
 
