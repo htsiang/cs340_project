@@ -18,8 +18,8 @@ function AddSessionsHasTreatments({ backendURL }) {
         const response = await fetch(backendURL + '/trainers');
         const data = await response.json();
         console.log(data);
-        setTrainers(data.trainers);
-        setEmail(data.trainers[0].email);
+        setTrainers(data.trainers.map((x) => ({value: x.trainerId, label: x.email, firstName: x.firstName, lastName: x.lastName})));
+        // setEmail(data.trainers[0].email);
     }
 
     const loadAllPokemon = async () => {
