@@ -34,6 +34,7 @@ function AddSessionsHasTreatments({ backendURL }) {
     const loadTreatments = async () => {
         const response = await fetch(backendURL + '/treatments');
         const data = await response.json();
+        console.log(data);
         setTreatments(data.treatments);
     }
 
@@ -49,8 +50,9 @@ function AddSessionsHasTreatments({ backendURL }) {
         navigate('/');
     }
 
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
+    const handleEmailChange = (newVal, actionMeta) => {
+        console.log(newVal);
+        setEmail(newVal);
     }
 
     const handlePokemonChange = (event) => {
