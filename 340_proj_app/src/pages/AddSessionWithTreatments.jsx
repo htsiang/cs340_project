@@ -62,8 +62,6 @@ function AddSessionsHasTreatments({ backendURL }) {
         setSelectedPokemon(event.target.value);
     }
 
-    
-
     const addSessionWithTreatments = async (e) => {
         e.preventDefault();
 
@@ -83,9 +81,9 @@ function AddSessionsHasTreatments({ backendURL }) {
                     <br></br>
                     <label className='form-field'><span className='label'>Pokemon</span>
                         <select value={pokemon} onChange={handlePokemonChange}>
-                            {trainerPokemons.map((trainerPokemon) => (
-                                <option key={trainerPokemon.pokemonId} value={trainerPokemon.nickname}>
-                                    {trainerPokemon.nickname}
+                            {trainerPokemon.map((pokemon) => (
+                                <option key={pokemon.pokemonId} value={pokemon.nickname}>
+                                    {pokemon.nickname}
                                 </option>
                             ))}
                         </select>
