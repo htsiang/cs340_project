@@ -67,9 +67,9 @@ function AddSessionsHasTreatments({ backendURL }) {
         const { value , checked } = event.target;
 
         if (checked) {
-            setSelectedTreatments([... selectedTreatments, value]);
+            setSelectedTreatments([... selectedTreatments, parseInt(value)]);
         } else {
-            setSelectedTreatments(selectedTreatments.filter((treatment) => treatment !== value));
+            setSelectedTreatments(selectedTreatments.filter((treatment) => treatment !== parseInt(value)));
         }
     };
 
