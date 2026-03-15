@@ -17,14 +17,15 @@ function AddSessionsHasTreatments({ backendURL }) {
     const loadTrainers = async () => {
         const response = await fetch(backendURL + '/trainers');
         const data = await response.json();
+        console.log(data);
         setTrainers(data.trainers);
-        console.log(trainers);
         setEmail(data.trainers[0].email);
     }
 
     const loadAllPokemon = async () => {
         const response = await fetch(backendURL + '/pokemon');
         const data = await response.json();
+        console.log(data);
         setAllPokemon(data.pokemon);
         const trainerPokemon = data.pokemon.filter(p => p.firstName === data.trainers[0].firstName && p.lastName === data.trainers[0].lastName);
         setPokemon(trainerPokemon[0].nickname);
