@@ -16,9 +16,12 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
         const response1 = await fetch(backendURL + '/treatments');
         const data1 = await response1.json();
         console.log(data1);
-
-        // const response2 = await fetch()
         setTreatments(data1.treatments);
+
+        const response2 = await fetch(backendURL + '/sessionsHasTreatments/' + sessionToEdit.sessionId);
+        const data2 = await response2.json();
+        console.log(data2);
+        setSessionTreatments(data2.sessionsHasTreatments.map(x => (x.treatmentId)));
     }
 
     useEffect(() => {
@@ -31,6 +34,16 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
         navigate('/sessions');
     }
 
+    const handleTreatmentChange = (event) => {
+        const { value , checked } = event.target;
+
+        if (checked) {
+            setSelectedTreatments([... selectedTreatments, parseInt(value)]);
+        } else {
+            setSelectedTreatments(selectedTreatments.filter((treatment) => treatment !== parseInt(value)));
+        }
+    };
+    
     return (
         <div>
             <h2>Edit Session with Treatment Details</h2>
@@ -50,7 +63,8 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
                     <label className='form-field'><span className='label'>Cost:</span>
                         <input type='text' placeholder="Cost" value={sessionCost} onChange={e => setSessionCost(e.target.value)} />
                     </label>
-                    {treatments.map((treatment, i) => <SingleTreatmentCheckbox treatment={treatment} key={i}/>)}
+                    {treatments.map((treatment) => (<label><input type="checkbox" value={treatment.treatmentId} checked={sessionTreatments.includes(treatment.treatmentId)} onChange={handleTreatmentChange}/>{treatment.name}</label>))}
+                    {/* {treatments.map((treatment, i) => <SingleTreatmentCheckbox treatment={treatment} key={i}/>)} */}
                 </fieldset>
                 <button>Update</button>
                 <button onClick={cancelUpdate}>Cancel</button>
