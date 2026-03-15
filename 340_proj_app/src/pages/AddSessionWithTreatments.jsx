@@ -14,6 +14,7 @@ function AddSessionsHasTreatments({ backendURL }) {
     const [sessionTime, setSessionTime] = useState('');
     const [sessionCost, setSessionCost] = useState('');
     const [treatments, setTreatments] = useState([]);
+    const [selectedTreatments, setSelectedTreatments] = useState([]);
 
     const loadTrainers = async () => {
         const response = await fetch(backendURL + '/trainers');
@@ -62,6 +63,16 @@ function AddSessionsHasTreatments({ backendURL }) {
         setSelectedPokemon(event.target.value);
     }
 
+    const handleTreatmentChange = (event) => {
+        const { value , checked } = event.target;
+
+        if (checked) {
+            setSelectedTreatments([... selectedTreatments, value]);
+        } else {
+            setSelectedTreatments(selectedTreatments.filter((treatment) => treatment !== value));
+        }
+    };
+
     const addSessionWithTreatments = async (e) => {
         e.preventDefault();
 
@@ -82,7 +93,7 @@ function AddSessionsHasTreatments({ backendURL }) {
                     <label className='form-field'><span className='label'>Pokemon</span>
                         <select onChange={handlePokemonChange}>
                             {trainerPokemon.map((pokemon) => (
-                                <option key={pokemon.pokemonId} value={pokemon.nickname}>
+                                <option key={pokemon.pokemonId} value={pokemon.pokemonId}>
                                     {pokemon.nickname}
                                 </option>
                             ))}
@@ -100,7 +111,7 @@ function AddSessionsHasTreatments({ backendURL }) {
                     <label className='form-field'><span className='label'>Cost:</span>
                         <input type='text' placeholder="Cost" value={sessionCost} onChange={e => setSessionCost(e.target.value)} />
                     </label>
-                    {treatments.map((treatment, i) => <SingleTreatmentCheckbox treatment={treatment} key={treatment.treatmentId}/>)}
+                    {treatments.map((treatment, i) => <SingleTreatmentCheckbox treatment={treatment} onChange={handleTreatmentChange} key={treatment.treatmentId}/>)}
                 </fieldset>
                 <button onClick={addSessionWithTreatments}>Create</button>
             </form>
