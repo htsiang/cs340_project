@@ -161,7 +161,7 @@ app.get('/reset', async (req, res) => {
 app.post('/session', async (req, res) => {
     const connection = await db.getConnection();
     try {
-        const query1 = `CALL sp_create_session(${parseInt(req.body.selectedTrainer.value)}, ${parseInt(req.body.selectedPokemon)}, ${req.body.sessionDate}, ${req.body.sessionTime}, ${Number(req.body.sessionCost)}, @new_id);`;
+        const query1 = `CALL sp_create_session(${parseInt(req.body.selectedTrainer.value)}, ${parseInt(req.body.selectedPokemon)}, "${req.body.sessionDate}", "${req.body.sessionTime}", ${Number(req.body.sessionCost)}, @new_id);`;
         const query2 = `SELECT @new_id AS newSessionId;`;
         await connection.execute(query1);
         const [[result]] = await connection.execute(query2);
