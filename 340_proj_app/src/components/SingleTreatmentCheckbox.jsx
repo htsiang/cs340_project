@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../App.css';
 
-function SingleTreatmentCheckbox({ treatment, handleTreatmentChange }) {
+function SingleTreatmentCheckbox({ treatment, checked, handleTreatmentChange }) {
 //     const [isChecked, setIsChecked] = useState(treatment.checked);
     
 //     const handleOnChange = () => {
@@ -11,7 +11,7 @@ function SingleTreatmentCheckbox({ treatment, handleTreatmentChange }) {
     return (
         <div>
             <label>
-                <input type="checkbox" checked={isChecked} onChange={handleTreatmentChange} />
+                <input type="checkbox" checked={checked} value={treatment} onChange={handleTreatmentChange} />
                 {treatment.name}
             </label>
         </div>
