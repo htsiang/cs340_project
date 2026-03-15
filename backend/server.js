@@ -119,14 +119,10 @@ app.get('/sessions', async (req, res) => {
     }
 });
 
-app.get('/sessionsHasTreatments/:id', async (req, res) => {
+app.get('/sessionsHasTreatments', async (req, res) => {
     try {
         // Create and execute our queries
-        if(req.params.id){
-            const query1 = `CALL sp_get_sessionsHasTreatments_by_session(${req.params.id});`
-        } else {
-            const query1 = `CALL sp_get_sessionsHasTreatments();`;
-        }
+        const query1 = `CALL sp_get_sessionsHasTreatments();`;
         const [results] = await db.query(query1);
         const sessionsHasTreatments = results[0];
     
@@ -136,6 +132,22 @@ app.get('/sessionsHasTreatments/:id', async (req, res) => {
         console.error("Error executing queries:", error);
         // Send a generic error message to the browser
         res.status(500).send("An error occurred while executing the database queries.");
+    }
+});
+
+app.get('/sessionsHasTreatments/:id', async (req, res) => {
+    try {
+        // Create and execute our queries
+        const query1 = `CALL sp_get_sessionsHasTreatments_by_session(${req.params.id});`;
+        const [results] = await db.query(query1);
+        const sessionsHasTreatments = results[0];
+    
+        res.status(200).json({ sessionsHasTreatments });  // Send the results to the frontend
+
+    } catch (error) {
+        console.error("Error executing queries:", error);
+        // Send a generic error message to the browser
+        res.status(500).send("Error executing queries:", error);
     }
 });
 
