@@ -7,32 +7,29 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
     const [sessionDate, setSessionDate] = useState(sessionToEdit.dateCol);
     const [sessionTime, setSessionTime] = useState(sessionToEdit.timeCol);
     const [sessionCost, setSessionCost] = useState(sessionToEdit.cost);
+    const [sessionTreatments, setSessionTreatments] = useState([]);
+    const [treatments, setTreatments] = useState([]);
 
     console.log(sessionToEdit);
 
+    const loadTreatments = async () => {
+        const response1 = await fetch(backendURL + '/treatments');
+        const data1 = await response1.json();
+        console.log(data1);
+
+        // const response2 = await fetch()
+        setTreatments(data1.treatments);
+    }
+
+    useEffect(() => {
+        loadTreatments();
+    }, []);
+
     const navigate = useNavigate();
 
-    const treatments = [{
-        treatmentId: 1,
-        name: "Body Massage",
-        duration: 30,
-        cost: 15.00,
-        description: "Swedish massage techniques are applied to the surface/skin of your Pokemon. Pressure is applied to encourage relaxation. Must be a species-applicable Pokemon."
-    },
-    {
-        treatmentId: 2,
-        name: "Heated Therapy",
-        duration: 60,
-        cost: 25.00,
-        description: "Warm towels are applied to the body of your Pokemon. If applicable, a paste that heats up on the skin is also included that soothes and rejuvenates sore muscles."
-    },
-    {
-        treatmentId: 3,
-        name: "Wash and Soak",
-        duration: 90,
-        cost: 45.00,
-        description: "Species-appropriate soaps are used to wash dirt and grime away. Pokemon are offered hot springs or species-appropriate baths with salts to soak in for the remainder of their time."
-    }]
+    const cancelUpdate = () => {
+        navigate('/sessions');
+    }
 
     return (
         <div>
@@ -56,6 +53,7 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
                     {treatments.map((treatment, i) => <SingleTreatmentCheckbox treatment={treatment} key={i}/>)}
                 </fieldset>
                 <button>Update</button>
+                <button onClick={cancelUpdate}>Cancel</button>
             </form>
         </div>
     )

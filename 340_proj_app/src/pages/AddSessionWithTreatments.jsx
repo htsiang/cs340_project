@@ -46,7 +46,7 @@ function AddSessionsHasTreatments({ backendURL }) {
     const navigate = useNavigate();
 
     const cancelAdd = () => {
-        navigate('/');
+        navigate('/sessions');
     }
 
     const handleTrainerChange = (newVal, actionMeta) => {
@@ -125,9 +125,9 @@ function AddSessionsHasTreatments({ backendURL }) {
                         <input type='text' placeholder="Cost" value={sessionCost} onChange={e => setSessionCost(e.target.value)} />
                     </label>
                     {treatments.map((treatment) => (<label><input type="checkbox" value={treatment.treatmentId} checked={selectedTreatments.includes(treatment.treatmentId)} onChange={handleTreatmentChange}/>{treatment.name}</label>))}
-                    {/* {treatments.map((treatment, i) => <SingleTreatmentCheckbox treatment={treatment} onChange={handleTreatmentChange} checked={selectedTreatments.includes(treatment)} key={treatment.treatmentId}/>)} */}
                 </fieldset>
                 <button onClick={addSessionWithTreatments}>Create</button>
+                <button onClick={cancelAdd}>Cancel</button>
             </form>
         </div>
     )

@@ -119,10 +119,14 @@ app.get('/sessions', async (req, res) => {
     }
 });
 
-app.get('/sessionsHasTreatments', async (req, res) => {
+app.get('/sessionsHasTreatments/:id', async (req, res) => {
     try {
         // Create and execute our queries
-        const query1 = `CALL sp_get_sessionsHasTreatments();`;
+        if(req.params.id){
+            const query1 = `CALL sp_get_sessionsHasTreatments_by_session(${req.params.id});`
+        } else {
+            const query1 = `CALL sp_get_sessionsHasTreatments();`;
+        }
         const [results] = await db.query(query1);
         const sessionsHasTreatments = results[0];
     
@@ -180,13 +184,9 @@ app.post('/sessionWithTreatments', async (req, res) => {
     }
 })
 
-app.post('/sessionHasTreatments', async (req, res) => {
-
+app.put('/session', async (req, res) => {
+    const query1 = `CALL sp_update_session(${req.body.sessionId}, ${req.body}, ${req.body}, ${req.body});`;
 })
-
-// app.put('/session', async (req, res) => {
-//     const query1 = `CALL sp_create_session(${email, pokemonNickname, })`
-// })
 
 // ########################################
 // ########## LISTENER
