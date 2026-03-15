@@ -158,6 +158,17 @@ app.get('/reset', async (req, res) => {
     }
 })
 
+app.post('/session', async (req, res) => {
+    try {
+        const query1 = `CALL sp_create_session(${parseInt(req.body.selectedTrainer.value)}, ${parseInt(req.body.selectedPokemon)}, ${req.body.sessionDate}, ${req.body.sessionTime}, ${req.body.sessionCost})`;
+        const result = await db.query(query1);
+        res.status(201).json(result);
+    } catch (error) {
+        console.error("Error adding session:", error);
+        res.status(500).send("An error occured while trying to add a session.");
+    }
+})
+
 // app.put('/session', async (req, res) => {
 //     const query1 = `CALL sp_create_session(${email, pokemonNickname, })`
 // })

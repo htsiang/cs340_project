@@ -21,7 +21,6 @@ function AddSessionsHasTreatments({ backendURL }) {
         const data = await response.json();
         console.log(data);
         setTrainers(data.trainers.map((x) => ({value: x.trainerId, label: x.email, firstName: x.firstName, lastName: x.lastName})));
-        // setEmail(data.trainers[0].email);
     }
 
     const loadAllPokemon = async () => {
@@ -76,8 +75,17 @@ function AddSessionsHasTreatments({ backendURL }) {
     const addSessionWithTreatments = async (e) => {
         e.preventDefault();
 
-        const newSession = {selectedTrainer, selectedPokemon, sessionDate, sessionTime, sessionCost, selectedTreatments};
+        const newSession = {selectedTrainer, selectedPokemon, sessionDate, sessionTime, sessionCost};
+        const newSelectedTreatments = selectedTreatments;
         console.log(newSession);
+        console.log(newSelectedTreatments);
+
+        const response = await fetch(backendURL + "/session", {
+            method: "POST",
+            body: JSON.stringify(newSession)
+        });
+
+        console.log(response);
     }
 
     return (
