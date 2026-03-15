@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
 function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
-    const [sessionDate, setSessionDate] = useState(sessionToEdit.dateCol);
+    const [sessionDate, setSessionDate] = useState(sessionToEdit.dateCol.split('T')[0]);
     const [sessionTime, setSessionTime] = useState(sessionToEdit.timeCol);
     const [sessionCost, setSessionCost] = useState(sessionToEdit.cost);
     const [sessionTreatments, setSessionTreatments] = useState([]);
@@ -37,9 +37,9 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
         const { value , checked } = event.target;
 
         if (checked) {
-            setSelectedTreatments([... selectedTreatments, parseInt(value)]);
+            setSessionTreatments([... selectedTreatments, parseInt(value)]);
         } else {
-            setSelectedTreatments(selectedTreatments.filter((treatment) => treatment !== parseInt(value)));
+            setSessionTreatments(selectedTreatments.filter((treatment) => treatment !== parseInt(value)));
         }
     };
 
