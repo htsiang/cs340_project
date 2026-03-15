@@ -76,11 +76,9 @@ function AddSessionsHasTreatments({ backendURL }) {
         e.preventDefault();
 
         const newSession = {selectedTrainer, selectedPokemon, sessionDate, sessionTime, sessionCost, selectedTreatments};
-        const newSelectedTreatments = selectedTreatments;
         console.log(newSession);
-        console.log(newSelectedTreatments);
 
-        const response = await fetch(backendURL + "/session", {
+        const response = await fetch(backendURL + "/sessionWithTreatments", {
             method: "POST",
             body: JSON.stringify(newSession)
         });
