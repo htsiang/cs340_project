@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import '../App.css';
-import SingleTreatmentCheckbox from '../components/SingleTreatmentCheckbox';
 
 function AddSessionsHasTreatments({ backendURL }) {
     const [trainers, setTrainers] = useState([]);
@@ -88,9 +87,6 @@ function AddSessionsHasTreatments({ backendURL }) {
 
         if (!response.ok) {
             console.error("Error:", await response.text());
-        } else {
-            const data = await response.json();
-            alert("Created session:", data);
         }
     }
 
