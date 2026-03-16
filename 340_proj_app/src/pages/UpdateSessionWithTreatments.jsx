@@ -55,17 +55,17 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
 
         console.log(updatedSession);
 
-        // const response = await fetch(backendURL + '/session', {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(updatedSession)
-        // });
+        const response = await fetch(backendURL + '/session', {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedSession)
+        });
 
-        // if (!response.ok) {
-        //     console.error("Error:", await response.text());
-        // }
+        if (!response.ok) {
+            console.error("Error:", await response.text());
+        }
     }
 
     return (
