@@ -6,7 +6,7 @@ import '../App.css';
 function AddSessionsHasTreatments({ backendURL }) {
     const [trainers, setTrainers] = useState([]);
     const [allPokemon, setAllPokemon] = useState([]);
-    const [selectedTrainer, setSelectedTrainer] = useState('');
+    const [selectedTrainer, setSelectedTrainer] = useState(null);
     const [trainerPokemon, setTrainerPokemon] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState('');
     const [sessionDate, setSessionDate] = useState('');
@@ -14,6 +14,8 @@ function AddSessionsHasTreatments({ backendURL }) {
     const [sessionCost, setSessionCost] = useState('');
     const [treatments, setTreatments] = useState([]);
     const [selectedTreatments, setSelectedTreatments] = useState([]);
+
+    const [errors, setErrors] = useState({});
 
     const loadTrainers = async () => {
         const response = await fetch(backendURL + '/trainers');
@@ -29,7 +31,7 @@ function AddSessionsHasTreatments({ backendURL }) {
         setAllPokemon(data.pokemon);
         setTrainerPokemon(data.pokemon);
     }
-    
+
     const loadTreatments = async () => {
         const response = await fetch(backendURL + '/treatments');
         const data = await response.json();
@@ -54,8 +56,13 @@ function AddSessionsHasTreatments({ backendURL }) {
         setSelectedTrainer(newVal);
 
         // This also recalculates automatically whenever selected trainer changes.
-        setTrainerPokemon(allPokemon.filter(p => p.trainerId===newVal.value));
-    }
+        // included else to reset the field otherwise
+        if (newVal) {
+            setTrainerPokemon(allPokemon.filter(p => p.trainerId===newVal.value));
+        } else {
+            setTrainerPokemon(allPokemon);
+        }
+    };
 
     const handlePokemonChange = (event) => {
         setSelectedPokemon(event.target.value);
@@ -71,8 +78,29 @@ function AddSessionsHasTreatments({ backendURL }) {
         }
     };
 
+    // calculate total cost based on check boxes
+    useEffect(() => {
+        const totalCost = treatments
+            .filter(t => selectedTreatments.includes(t.treatmentId))
+            .reduce((sum, t) => sum + (Number(t.cost) || 0), 0);
+        setSessionCost(totalCost.toFixed(2));
+    }, [selectedTreatments, treatments]);
+
     const addSessionWithTreatments = async (e) => {
         e.preventDefault();
+
+        // errors if missing a required field
+        const newErrors = {};
+        if (!selectedTrainer) newErrors.trainer = "Please select a trainer.";
+        if (!selectedPokemon) newErrors.pokemon = "Please select a Pokémon.";
+        if (!sessionDate) newErrors.date = "Please pick a session date.";
+        if (!sessionTime) newErrors.time = "Please pick a session time.";
+        // render error text for cost right after checkbox placement in fieldset
+        if (selectedTreatments.length === 0) newErrors.treatments = "Requires at least 1 treatment.";
+
+        setErrors(newErrors);
+
+        if (Object.keys(newErrors).length > 0) return;
 
         const newSession = {selectedTrainer, selectedPokemon, sessionDate, sessionTime, sessionCost, selectedTreatments};
         console.log(newSession);
@@ -86,7 +114,6 @@ function AddSessionsHasTreatments({ backendURL }) {
         });
 
         if (!response.ok) {
-            console.error("Error:", await response.text());
             alert("Add failed.")
         } else {
             navigate('/sessions');
@@ -96,17 +123,18 @@ function AddSessionsHasTreatments({ backendURL }) {
     return (
         <div>
             <h2>Add Session with Treatment Details</h2>
-            <form className='form'>
+            <form className='form' onSubmit={addSessionWithTreatments}>
                 <fieldset>
                     <legend>Add Session with Treatment Details</legend>
                     <label className='form-field'><span className='label'>Trainer's Email:</span>
                         <Select isSearchable={true} isSelectable={true} options={trainers} onChange={handleTrainerChange}></Select>
                     </label>
+                    {errors.trainer && <p style={{color:"red"}}>{errors.trainer}</p>}
                     <br></br>
                     <label className='form-field'><span className='label'>Pokemon</span>
                         <select onChange={handlePokemonChange}>
                             <option value="">
-                                Choose an option...
+                                Choose a Pokemon...
                             </option>
                             {trainerPokemon.map((pokemon) => (
                                 <option key={pokemon.pokemonId} value={pokemon.pokemonId}>
@@ -115,21 +143,27 @@ function AddSessionsHasTreatments({ backendURL }) {
                             ))}
                         </select>
                     </label>
+                    {errors.pokemon && <p style={{color:"red"}}>{errors.pokemon}</p>}
                     <br></br>
                     <label className='form-field'><span className='label'>Session Date:</span>
                         <input type='date' placeholder="YYYY-MM-DD" value={sessionDate} onChange={e => setSessionDate(e.target.value)} />
                     </label>
+                    {errors.date && <p style={{color:"red"}}>{errors.date}</p>}
                     <br></br>
                     <label className='form-field'><span className='label'>Session Time:</span>
                         <input type='time' placeholder="00:00" value={sessionTime} onChange={e => setSessionTime(e.target.value)} />
                     </label>
+                    {errors.time && <p style={{color:"red"}}>{errors.time}</p>}
                     <br></br>
                     <label className='form-field'><span className='label'>Cost:</span>
-                        <input type='text' placeholder="Cost" value={sessionCost} onChange={e => setSessionCost(e.target.value)} />
+                        <input type='text' placeholder="Cost" value={sessionCost} readOnly />
                     </label>
-                    {treatments.map((treatment) => (<label><input type="checkbox" value={treatment.treatmentId} checked={selectedTreatments.includes(treatment.treatmentId)} onChange={handleTreatmentChange}/>{treatment.name}</label>))}
+                    {treatments.map((treatment) => (
+                        <label key={treatment.treatmentId}><input type="checkbox" value={treatment.treatmentId} checked={selectedTreatments.includes(treatment.treatmentId)} onChange={handleTreatmentChange}/>{treatment.name}</label>
+                    ))}
+                    {errors.treatments && <p style={{color:"red"}}>{errors.treatments}</p>}
                 </fieldset>
-                <button onClick={addSessionWithTreatments}>Create</button>
+                <button type='submit'>Create</button>
                 <button onClick={cancelAdd}>Cancel</button>
             </form>
         </div>
