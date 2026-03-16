@@ -163,7 +163,7 @@ function AddSessionsHasTreatments({ backendURL }) {
                     ))}
                     {errors.treatments && <p style={{color:"red"}}>{errors.treatments}</p>}
                 </fieldset>
-                <button type='submit'>Create</button>
+                <button type='submit' style={{ marginRight: "10px" }}>Create</button>
                 <button onClick={cancelAdd}>Cancel</button>
             </form>
         </div>

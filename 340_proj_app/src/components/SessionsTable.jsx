@@ -24,6 +24,7 @@ function SessionsTable({ sessions, onDelete, onEdit }){
                     </th>
                 </tr>
             </thead>
+
             <tbody>
                 {sessions.map((session, i) => <SessionsTableRow session={session} onDelete={onDelete} onEdit={onEdit} key={i} />)}
             </tbody>
