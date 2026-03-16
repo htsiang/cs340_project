@@ -65,6 +65,9 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
 
         if (!response.ok) {
             console.error("Error:", await response.text());
+            alert("Update failed.")
+        } else {
+            navigate('/sessions');
         }
     }
 

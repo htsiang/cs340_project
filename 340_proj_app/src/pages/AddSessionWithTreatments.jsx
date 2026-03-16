@@ -87,6 +87,9 @@ function AddSessionsHasTreatments({ backendURL }) {
 
         if (!response.ok) {
             console.error("Error:", await response.text());
+            alert("Add failed.")
+        } else {
+            navigate('/sessions');
         }
     }
 
