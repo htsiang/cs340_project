@@ -7,6 +7,7 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
     const [sessionTime, setSessionTime] = useState(sessionToEdit.timeCol);
     const [sessionCost, setSessionCost] = useState(sessionToEdit.cost);
     const [sessionTreatments, setSessionTreatments] = useState([]);
+    const [selectedTreatments, setSelectedTreatments] = useState([]);
     const [treatments, setTreatments] = useState([]);
 
     console.log(sessionToEdit);
@@ -20,7 +21,9 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
         const response2 = await fetch(backendURL + '/sessionsHasTreatments/' + sessionToEdit.sessionId);
         const data2 = await response2.json();
         console.log(data2);
-        setSessionTreatments(data2.sessionsHasTreatments.map(x => (x.treatmentId)));
+        const treatmentArr = data2.sessionsHasTreatments.map(x => (x.treatmentId));
+        setSessionTreatments(treatmentArr);
+        setSelectedTreatments([...treatmentArr]);
     }
 
     useEffect(() => {
@@ -37,11 +40,22 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
         const { value , checked } = event.target;
 
         if (checked) {
-            setSessionTreatments([... selectedTreatments, parseInt(value)]);
+            setSelectedTreatments([... selectedTreatments, parseInt(value)]);
         } else {
-            setSessionTreatments(selectedTreatments.filter((treatment) => treatment !== parseInt(value)));
+            setSelectedTreatments(selectedTreatments.filter((treatment) => treatment !== parseInt(value)));
         }
     };
+
+    const updateSessionWithTreatments = async (e) => {
+        e.preventDefault();
+
+        const updatedSession = {sessionDate, sessionTime, sessionCost};
+        const sessionsToDelete = sessionTreatments.filter(t => !selectedTreatments.includes(t));
+        const sessionsToAdd = selectedTreatments.filter(t => !sessionTreatments.includes(t));
+
+        console.log(sessionsToAdd);
+        console.log(sessionsToDelete);
+    }
 
     return (
         <div>
@@ -62,9 +76,9 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
                     <label className='form-field'><span className='label'>Cost:</span>
                         <input type='text' placeholder="Cost" value={sessionCost} onChange={e => setSessionCost(e.target.value)} />
                     </label>
-                    {treatments.map((treatment) => (<label><input type="checkbox" value={treatment.treatmentId} checked={sessionTreatments.includes(treatment.treatmentId)} onChange={handleTreatmentChange}/>{treatment.name}</label>))}
+                    {treatments.map((treatment) => (<label><input type="checkbox" value={treatment.treatmentId} checked={selectedTreatments.includes(treatment.treatmentId)} onChange={handleTreatmentChange}/>{treatment.name}</label>))}
                 </fieldset>
-                <button>Update</button>
+                <button onClick={updateSessionWithTreatments}>Update</button>
                 <button onClick={cancelUpdate}>Cancel</button>
             </form>
         </div>
