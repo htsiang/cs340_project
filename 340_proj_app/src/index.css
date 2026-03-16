@@ -35,6 +35,11 @@ h1 {
   line-height: 1.1;
 }
 
+.table td,
+.table th {
+  padding: 4px 10px;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
