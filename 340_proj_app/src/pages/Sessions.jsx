@@ -19,11 +19,13 @@ function Sessions({ backendURL, setSessionToEdit }){
     const navigate = useNavigate();
 
     const onDelete = async (sessionId) => {
-        const response = await fetch(`${backendURL}/sessions/${sessionId}`, { method: 'DELETE' });
-        if (response.status === 204) {
-            loadSessions();
-        } else {
-            console.error(`Failed to delete movie with id = ${sessionId}, status code = ${response.status}`);
+        if(confirm(`Are you sure you want to delete session #${sessionId}?`)) {
+            const response = await fetch(`${backendURL}/sessions/${sessionId}`, { method: 'DELETE' });
+            if (response.status === 204) {
+                loadSessions();
+            } else {
+                console.error(`Failed to delete movie with id = ${sessionId}, status code = ${response.status}`);
+            }
         }
     }
 
