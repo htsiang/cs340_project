@@ -198,11 +198,17 @@ app.post('/sessionWithTreatments', async (req, res) => {
 
 app.put('/session', async (req, res) => {
     try{
-        const query1 = `CALL sp_update_session(${req.body.sessionId}, ${req.body}, ${req.body}, ${req.body});`;
+        const query1 = `CALL sp_update_session(${parseInt(req.body.sessionId)}, ${req.body.sessionDate}, ${req.body.sessionTime}, ${Number(req.body.sessionCost)});`;
         await db.query(query1);
 
         for (const treatment of req.body.treatmentsToAdd) {
-            query2 = ``
+            const query2 = `CALL sp_add_treatment_to_session(${req.body.sessionId}, ${treatment});`;
+            await db.query(query2);
+        }
+
+        for (const treatment of req.body.treatmentsToDelete) {
+            const query3 = `CALL sp_delete_session_treatment(${req.body.sessionId}, ${treatment});`;
+            await db.query(query3);
         }
 
         res.status(200).json();
