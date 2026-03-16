@@ -197,7 +197,19 @@ app.post('/sessionWithTreatments', async (req, res) => {
 })
 
 app.put('/session', async (req, res) => {
-    const query1 = `CALL sp_update_session(${req.body.sessionId}, ${req.body}, ${req.body}, ${req.body});`;
+    try{
+        const query1 = `CALL sp_update_session(${req.body.sessionId}, ${req.body}, ${req.body}, ${req.body});`;
+        await db.query(query1);
+
+        for (const treatment of req.body.treatmentsToAdd) {
+            query2 = ``
+        }
+
+        res.status(200).json();
+    } catch {
+        console.error("Error updating session:", error);
+        res.status(500).send("Error updating session:" + error);
+    }
 })
 
 // ########################################

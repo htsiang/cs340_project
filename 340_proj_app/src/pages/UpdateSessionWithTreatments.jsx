@@ -49,12 +49,23 @@ function UpdateSessionWithTreatments({ backendURL, sessionToEdit }) {
     const updateSessionWithTreatments = async (e) => {
         e.preventDefault();
 
-        const updatedSession = {sessionDate, sessionTime, sessionCost};
-        const sessionsToDelete = sessionTreatments.filter(t => !selectedTreatments.includes(t));
-        const sessionsToAdd = selectedTreatments.filter(t => !sessionTreatments.includes(t));
+        const treatmentsToDelete = sessionTreatments.filter(t => !selectedTreatments.includes(t));
+        const treatmentsToAdd = selectedTreatments.filter(t => !sessionTreatments.includes(t));
+        const updatedSession = {"sessionId": sessionToEdit.sessionId, sessionDate, sessionTime, sessionCost, treatmentsToAdd, treatmentsToDelete};
 
-        console.log(sessionsToAdd);
-        console.log(sessionsToDelete);
+        console.log(updatedSession);
+
+        // const response = await fetch(backendURL + '/session', {
+        //     method: "PUT",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(updatedSession)
+        // });
+
+        // if (!response.ok) {
+        //     console.error("Error:", await response.text());
+        // }
     }
 
     return (
