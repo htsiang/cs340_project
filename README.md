@@ -23,7 +23,7 @@ Contains 4 tables and 1 intersect table.
 
 This project includes adapted code from the following sources:
 
-### OSU Course Material - CS340 - Databases
+### OSU Course Material - (CS-290 - Web Development)
 
 **Activity 2 - Connect Webapp to Database (Individual)**
 
