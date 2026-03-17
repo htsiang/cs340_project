@@ -30,7 +30,7 @@ function SessionsTableRow({ session, onDelete, onEdit }){
             <td className='columns'>{session.pokemonType}</td>
             <td className='columns'>{session.species}</td>
             <td className='columns'>{dateOnly(session.dateCol)}</td>
-            <td className='columns'>{timeConverter(session.timeCol)}</td>
+            <td className='columns'>{timeConverter(session.dateCol, session.timeCol)}</td>
             <td className='columns'>{session.cost}</td>
             <UpdateDelete className='columns' session={session} onDelete={onDelete} onEdit={onEdit}/>
         </tr>

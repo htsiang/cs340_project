@@ -30,7 +30,7 @@ function SessionsHasTreatmentsTableRow({ detail }){
             <td className='columns'>{detail.pokemonType}</td>
             <td className='columns'>{detail.species}</td>
             <td className='columns'>{dateOnly(detail.dateCol)}</td>
-            <td className='columns'>{timeConverter(detail.timeCol)}</td>
+            <td className='columns'>{timeConverter(detail.dateCol, detail.timeCol)}</td>
             <td className='columns'>{detail.treatmentName}</td>
             <td className='columns'>{detail.treatmentDuration}</td>
         </tr>
