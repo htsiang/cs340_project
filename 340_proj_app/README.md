@@ -11,7 +11,8 @@ This database project showcases database design, SQL, and web application develo
 
 This database was created using MySQL. ER Diagrams and schemas were created using MySQL workbench. 
 
-**Database structure**
+**Database structure:**
+
 Contains 4 tables and 1 intersect table:
 * Trainers
 * Pokemon
@@ -21,7 +22,7 @@ Contains 4 tables and 1 intersect table:
 
 ## Citations
 
-This project includes adapted code from the following sourcse:
+This project includes adapted code from the following sources:
 
 ### OSU Course Material - CS340 - Databases
 
